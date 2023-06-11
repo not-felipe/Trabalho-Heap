@@ -35,7 +35,7 @@ void ajustarSubindo(int *heap, int pos) {
   if (pos != -1) { // NULL
     int pai = indicePai(pos);
     if (pai != -1) {
-      if (heap[pos] > heap[pai]) { // Nó maior que pai?
+      if (heap[pos] < heap[pai]) { // Nó maior que pai?
         int aux = heap[pos];
         heap[pos] = heap[pai];
         heap[pai] = aux;
@@ -50,10 +50,10 @@ void ajustarDescendo(int *heap, int pos) {
     // Descobrindo o maior filho
     int indiceMaiorFilho = indiceFilhoEsq(pos);
     if (indiceFilhoDir(pos) != -1 &&
-        heap[indiceFilhoDir(pos)] > heap[indiceMaiorFilho])
+        heap[indiceFilhoDir(pos)] < heap[indiceMaiorFilho])
       indiceMaiorFilho = indiceFilhoDir(pos);
 
-    if (heap[indiceMaiorFilho] > heap[pos]) {
+    if (heap[indiceMaiorFilho] < heap[pos]) {
       int aux = heap[pos];
       heap[pos] = heap[indiceMaiorFilho];
       heap[indiceMaiorFilho] = aux;
@@ -98,12 +98,14 @@ int main() {
       Inserir(heap, x);
       break;
     }
-    case 2:
-      if (remover(heap) != -1)
-        printf("Elemento %d removido com sucesso!\n", remover(heap));
+    case 2: {
+      int elementoRemovido = remover(heap);
+      if (elementoRemovido != -1)
+        printf("Elemento %d removido com sucesso!\n", elementoRemovido);
       else
         printf("Nao ha elemento para ser removido!\n");
       break;
+    }
     case 3:
       printf("Representação da heap\n");
       for (int i = 0; i < totalElementos; i++) {
